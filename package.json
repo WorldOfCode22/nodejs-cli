@@ -1,0 +1,32 @@
+{
+  "name": "nodejs-cli",
+  "version": "1.0.0",
+  "description": "A nodejs CLI for faster development and scaffolding",
+  "main": "index.js",
+  "bin": {
+    "nodejs-cli": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodejs-cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WorldOfCode22/nodejs-cli.git"
+  },
+  "keywords": [
+    "scaffolding",
+    "faster-development",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Sloan Gwaltney (worldofcode22@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WorldOfCode22/nodejs-cli/issues"
+  },
+  "homepage": "https://github.com/WorldOfCode22/nodejs-cli#readme",
+  "dependencies": {
+    "commander": "^2.15.0"
+  }
+}
