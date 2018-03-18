@@ -1,7 +1,15 @@
-const cmdFunctions = require('../command-functions.js')
+const File = require('../command-functions/file-functions')
 module.exports = (name, cmd) => {
-  cmdFunctions.File.createProjectRoot(name, cmd)
+  let FileOps = new File(name, cmd)
+  FileOps.createProjectRoot()
     .then(
-      console.log('Root File Made')
+      () => { FileOps.npmInit() },
+      err => { throw new Error(err) }
+    )
+    .then(
+      () => {
+        console.log('NPM File Created')
+      },
+      err => { throw new Error(err) }
     )
 }
