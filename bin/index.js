@@ -2,6 +2,7 @@
 const commander = require('commander')
 const np = require('./commands/np')
 const nmm = require('./commands/nmm')
+const gqt = require('./commands/gqt')
 // New Project
 commander
   .command('np <name>')
@@ -17,10 +18,17 @@ commander
 commander
   .command('nmm <name>')
   .description('Adds new mongose model scaffold to project')
-  .option('-f, --file <file>', 'Adds new model scaffold to the file given to the file tag. This is ideal for projects not made with this CLI')
   .action(
     (name, cmd) => {
       nmm(name, cmd)
+    }
+  )
+commander
+  .command('gqt <name>')
+  .description('Adds new graphql type to project')
+  .action(
+    (name, cmd) => {
+      gqt(name)
     }
   )
 commander
