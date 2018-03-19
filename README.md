@@ -11,6 +11,8 @@ Install the package:
 Sloan Gwaltney (worldofcode22@gmail.com)
 ## Built With
 [Commander](https://www.npmjs.com/package/commander)
+[fs-extra](https://www.npmjs.com/package/fs-extra)
+[shelljs](https://www.npmjs.com/package/shelljs)
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
 ## Versioning
@@ -23,17 +25,17 @@ All commands are typed like this:
 for example:   
 ``` nodejs-cli np -e -m -g test ```   
 ## Command Documentation
-### np
-Creates a new project   
+### np <name>
+Creates a new project with the given name in the current directory   
 options:   
 * -e, --express will set up an express app as the backend framework for node. Right now this is the only supported framework and an error will be given if this tag is not in the command line args.
 * -m, --mongoose will set up mongoose and mongoose folders for this project.
 * -g, --graphql will set up graphql and graphql folders for this project.
-### nmm
-Creates a new mongoose model in the current directory.   
+### nmm <name>
+Creates a new mongoose model with the given name in the current directory.   
 options:   
 * None
-### gqt
-Creates a new Graphql type in the current directory.   
+### gqt <name>
+Creates a new Graphql type with the given name in the current directory.   
 options:   
 * None
