@@ -45,7 +45,15 @@ module.exports = (name, cmd) => {
       err => { throw new Error(err) }
     )
     .then(
-      () => { console.log('Created index.js') },
+      () => {
+        console.log('Created index.js')
+        console.log('Creating Mongoose Model File')
+        return FileOps.createMongooseModelsDir()
+      },
+      err => { throw new Error(err) }
+    )
+    .then(
+      () => { console.log('Created Mongoose Model File') },
       err => { throw new Error(err) }
     )
 }

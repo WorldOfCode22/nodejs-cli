@@ -8,6 +8,9 @@ module.exports = class File {
   getName () {
     return this.name
   }
+  getCommand () {
+    return this.command
+  }
   createProjectRoot () {
     console.log('Creating Project Root')
     return fs.mkdir(`./${this.name}`)
@@ -24,6 +27,11 @@ module.exports = class File {
 MONGO_URI=mongodb-uri-here
     `
     return fs.writeFile(`./.env`, text)
+  }
+  createMongooseModelsDir () {
+    if (this.command.mongoose) {
+      return fs.mkdir('./mongoose-models')
+    }
   }
   createGitignore () {
     let text =
