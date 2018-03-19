@@ -26,22 +26,22 @@ for example:
 ``` nodejs-cli np -e -m -g test ```   
 ## Command Documentation
 ### np 
-Creates a new project with a given name in the current directory.
-args: 
+Creates a new project with a given name in the current directory.   
+1. args:   
   * name required   
-options:   
+2. options:   
   * -e, --express will set up an express app as the backend framework for node. Right now this is the only supported framework and an   error will be given if this tag is not in the command line args.
   * -m, --mongoose will set up mongoose and mongoose folders for this project.
   * -g, --graphql will set up graphql and graphql folders for this project.
 ### nmm <name>
 Creates a new mongoose model with the given name in the current directory.  
-args:   
+1. args:   
   * name required   
-options:   
+2. options:   
   * None
 ### gqt <name>
 Creates a new Graphql type with the given name in the current directory.   
-args:   
+1. args:   
   * name required   
-options:   
+2. options:   
   * None
