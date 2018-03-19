@@ -21,13 +21,13 @@ module.exports = class File {
   createEnv () {
     let text =
     `PORT=3000
+MONGO_URI=mongodb-uri-here
     `
     return fs.writeFile(`./.env`, text)
   }
   createGitignore () {
     let text =
     `.env
-MONGO_URI=mongodb-uri-here
     `
     return fs.writeFile(`./.gitignore`, text)
   }
