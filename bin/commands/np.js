@@ -39,7 +39,13 @@ module.exports = (name, cmd) => {
     .then(
       () => {
         console.log('created .gitignore')
+        console.log('creating index.js')
+        return FileOps.createExpressApp()
       },
+      err => { throw new Error(err) }
+    )
+    .then(
+      () => { console.log('Created index.js') },
       err => { throw new Error(err) }
     )
 }

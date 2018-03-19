@@ -30,14 +30,37 @@ module.exports = class File {
     return fs.writeFile(`./.gitignore`, text)
   }
   createExpressApp () {
+    let self = this
+    function getModules () {
+      let text = ``
+      if (self.command.mongoose) {
+        text +=
+`const mongoose = require('mongoose')`
+      }
+      return text
+    }
+    function mongooseSetup () {
+      if (self.command.mongoose) {
+        return `mongoose.connect(process.env.PORT)
+  .then(
+    () => { console.log('Database connected') },
+    err => { console.log(err) }
+  )`
+      } else {
+        return ''
+      }
+    }
     let text =
-    `const express = require('express')
-     const app = express()
-     const port = process.env.PORT
-     app.listen(port,
-       () => {console.log("app waiting for request on port: " + port)}
-     )
-    `
+`const express = require('express')
+const app = express()
+const port = process.env.PORT
+${getModules()}
+
+${mongooseSetup()}
+app.listen(port,
+  () => { console.log("app waiting for request on port: " + port) }
+)
+`
     return fs.writeFile('./index.js', text)
   }
   npmInstall () {
