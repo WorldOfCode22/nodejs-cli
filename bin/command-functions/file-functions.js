@@ -26,7 +26,9 @@ module.exports = class File {
   }
   createGitignore () {
     let text =
-    `.env`
+    `.env
+MONGO_URI=mongodb-uri-here
+    `
     return fs.writeFile(`./.gitignore`, text)
   }
   createExpressApp () {
@@ -41,7 +43,7 @@ module.exports = class File {
     }
     function mongooseSetup () {
       if (self.command.mongoose) {
-        return `mongoose.connect(process.env.PORT)
+        return `mongoose.connect(process.env.MONGO_URI)
   .then(
     () => { console.log('Database connected') },
     err => { console.log(err) }
@@ -59,7 +61,7 @@ ${getModules()}
 
 ${mongooseSetup()}
 app.listen(port,
-  () => { console.log("app waiting for request on port: " + port) }
+  () => { console.log('app waiting for request on port: ' + port) }
 )
 `
     return fs.writeFile('./index.js', text)
@@ -67,7 +69,7 @@ app.listen(port,
   npmInstall () {
     console.log('Installing modules this may take a few minutes')
     if (this.command.express) {
-      let npmStr = 'express dotenv'
+      let npmStr = 'express dotenv '
       if (this.command.mongoose) {
         npmStr += 'mongoose '
       }
