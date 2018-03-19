@@ -51,7 +51,8 @@ module.exports = class File {
       }
     }
     let text =
-`const express = require('express')
+`require('dotenv').config()
+const express = require('express')
 const app = express()
 const port = process.env.PORT
 ${getModules()}
@@ -66,7 +67,7 @@ app.listen(port,
   npmInstall () {
     console.log('Installing modules this may take a few minutes')
     if (this.command.express) {
-      let npmStr = 'express '
+      let npmStr = 'express dotenv'
       if (this.command.mongoose) {
         npmStr += 'mongoose '
       }
