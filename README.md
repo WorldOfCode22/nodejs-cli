@@ -21,7 +21,7 @@ We use SemVer for versioning.
 # Documentation
 ## Commands
 All commands are typed like this:   
-``` nodejs-cli <command> [options] <name> ```   
+``` nodejs-cli <command> [options] <args> ```   
 for example:   
 ``` nodejs-cli np -e -m -g test ```   
 ## Command Documentation
