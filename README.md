@@ -1,12 +1,12 @@
 # nodejs-cli
-A Command Line Interface for scaffolding and quick node development. This CLI has both commands to start your project and commands to pre-compile text of repetitive task. Commands will be added as I use them in development and if anybody wants to add their own features, feature suggestions and creation are both welcome. 
+A Command Line Interface for scaffolding and quick node development. This CLI has both commands to start your project and commands to pre-compile text of repetitive task. Commands will be added as I use them in development and if anybody wants to add their own features, feature suggestions and creation are both welcome.
 ## Getting Started
 ### Prerequisites
 * Nodejs
 * NPM
 ### Installing
-This command is coming soon:   
-``` npx @worldofcode22/nodejs-cli ```
+Install the package:   
+``` npx nodejs-cli ```
 ## Authors
 Sloan Gwaltney (worldofcode22@gmail.com)
 ## Built With
