@@ -8,6 +8,7 @@ commander
   .description('Setup new project')
   .option('-m, --mongoose', 'Sets up mongoose for mongoDB databases')
   .option('-e, --express', 'Adds express to project')
+  .option('-g, --graphql', 'Adds graphql to project')
   .action(
     (name, cmd) => {
       np(name, cmd)

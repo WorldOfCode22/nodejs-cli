@@ -11,6 +11,70 @@ module.exports = class File {
   getCommand () {
     return this.command
   }
+  gqlSetup () {
+    return fs.mkdir(`./graphql`)
+      .then(
+        () => {
+          console.log('Made Graphql folder')
+          console.log('Making Graphql Root file')
+          let text = `const {GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList} = require('graphql')
+module.exports = new GraphQLObjectType({
+  name: 'Root_Query',
+  fields: {
+
+  }
+})
+`
+          shelljs.cd('./graphql')
+          return fs.writeFile('./root.js', text)
+        },
+        err => { throw new Error(err) }
+      )
+      .then(
+        () => {
+          console.log('Created Root File')
+          console.log('Creating Mutations File')
+          let text = `const {GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList} = require('graphql')
+module.exports = new GraphQLObjectType({
+  name: 'Root_Mutations',
+  fields: {
+
+  }
+})
+`
+          return fs.writeFile('./mutations.js', text)
+        },
+        err => { throw new Error(err) }
+      )
+      .then(
+        () => {
+          console.log('Created Root File')
+          console.log('Creating Schema File')
+          let text = `const root = require('./root')
+const {GraphQLSchema} = require('graphql')
+module.exports = new GraphQLSchema({
+  query: root
+});
+`
+          fs.writeFile('./schema.js', text)
+        },
+        err => { throw new Error(err) }
+      )
+      .then(
+        () => {
+          console.log('Created Schema File')
+          console.log('Creating Types Folder')
+          fs.mkdir('./types')
+        },
+        err => { throw new Error(err) }
+      )
+      .then(
+        () => {
+          console.log('Created Types Folder')
+        },
+        err => { throw new Error(err) }
+      )
+  }
   createProjectRoot () {
     console.log('Creating Project Root')
     return fs.mkdir(`./${this.name}`)
@@ -36,6 +100,7 @@ MONGO_URI=mongodb-uri-here
   createGitignore () {
     let text =
     `.env
+node_modules
     `
     return fs.writeFile(`./.gitignore`, text)
   }
@@ -45,17 +110,39 @@ MONGO_URI=mongodb-uri-here
       let text = ``
       if (self.command.mongoose) {
         text +=
-`const mongoose = require('mongoose')`
+`
+const mongoose = require('mongoose')`
+      }
+      if (self.command.graphql) {
+        text +=
+`
+const expressGraphQL = require('express-graphql')
+const GQLSchema = require('./graphql/schema.js')`
       }
       return text
     }
     function mongooseSetup () {
       if (self.command.mongoose) {
-        return `mongoose.connect(process.env.MONGO_URI)
+        return `
+mongoose.connect(process.env.MONGO_URI)
   .then(
     () => { console.log('Database connected') },
+    err => { throw new Error(err) }
+  )
+  .catch(
     err => { console.log(err) }
   )`
+      } else {
+        return ''
+      }
+    }
+    function graphqlSetup () {
+      if (self.command.graphql) {
+        return `
+app.use('/graphql', expressGraphQL({
+  graphiql: true,
+  schema: GQLSchema
+}))`
       } else {
         return ''
       }
@@ -66,8 +153,9 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT
 ${getModules()}
-
 ${mongooseSetup()}
+${graphqlSetup()}
+
 app.listen(port,
   () => { console.log('app waiting for request on port: ' + port) }
 )
@@ -80,6 +168,9 @@ app.listen(port,
       let npmStr = 'express dotenv '
       if (this.command.mongoose) {
         npmStr += 'mongoose '
+      }
+      if (this.command.graphql) {
+        npmStr += 'graphql express-graphql'
       }
       shelljs.cd(this.name)
       return this.shelljsExec(`npm install ${npmStr} --save`)

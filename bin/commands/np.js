@@ -56,4 +56,18 @@ module.exports = (name, cmd) => {
       () => { console.log('Created Mongoose Model File') },
       err => { throw new Error(err) }
     )
+    .then(
+      () => {
+        console.log('Creating Graphql Files')
+        return FileOps.gqlSetup()
+      },
+      err => { throw new Error(err) }
+    )
+    .then(
+      () => { console.log('Created Graphql Files') },
+      err => { throw new Error(err) }
+    )
+    .catch(
+      err => { console.log(err) }
+    )
 }
