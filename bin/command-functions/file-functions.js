@@ -5,6 +5,9 @@ module.exports = class File {
     this.name = name
     this.command = command
   }
+  getName () {
+    return this.name
+  }
   createProjectRoot () {
     console.log('Creating Project Root')
     return fs.mkdir(`./${this.name}`)
@@ -15,25 +18,63 @@ module.exports = class File {
         err => { throw new Error(err) }
       )
   }
-  createExpressApp () {
-
+  createEnv () {
+    let text =
+    `PORT=3000
+    `
+    return fs.writeFile(`./.env`, text)
   }
-  installModules (err) {
-    if (err) {
-      throw new Error(err)
-    }
+  createGitignore () {
+    let text =
+    `.env`
+    return fs.writeFile(`./.gitignore`, text)
+  }
+  createExpressApp () {
+    let text =
+    `const express = require('express')
+     const app = express()
+     const port = process.env.PORT
+     app.listen(port,
+       () => {console.log("app waiting for request on port: " + port)}
+     )
+    `
+    return fs.writeFile('./index.js', text)
+  }
+  npmInstall () {
     console.log('Installing modules this may take a few minutes')
-    if (this.cmd.express) {
+    if (this.command.express) {
       let npmStr = 'express '
-      if (this.cmd.mongoose) {
+      if (this.command.mongoose) {
         npmStr += 'mongoose '
       }
-      return shelljs.exec(`npm install ${npmStr} --save`)
+      shelljs.cd(this.name)
+      return this.shelljsExec(`npm install ${npmStr} --save`)
     } else {
       throw new Error('Right now only express is supported as a framework so the -e tag is required')
     }
   }
   npmInit () {
-    console.log('npm init')
+    console.log('Creating package.json')
+    let pack =
+    {
+      name: this.name,
+      version: '1.0.0',
+      description: 'This project was made with nodejs-cli',
+      main: 'index.js',
+      scripts: {
+        start: 'node index.js'
+      },
+      license: 'MIT'
+    }
+    return fs.writeFile(`./${this.name}/package.json`, JSON.stringify(pack))
+  }
+  shelljsExec (cmd) {
+    return new Promise((resolve, reject) => {
+      shelljs.exec(cmd, {async: true, silent: false},
+        (err) => {
+          if (err) reject(err)
+          else resolve()
+        })
+    })
   }
 }
