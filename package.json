@@ -1,6 +1,6 @@
 {
   "name": "nodejs-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A nodejs CLI for faster development and scaffolding",
   "main": "index.js",
   "bin": {
